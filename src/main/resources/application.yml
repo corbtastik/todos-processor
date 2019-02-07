@@ -1,0 +1,9 @@
+spring:
+    cloud:
+        stream:
+            bindings:
+                input:
+                    destination: todos
+                output:
+                    destination: todos-upper
+
