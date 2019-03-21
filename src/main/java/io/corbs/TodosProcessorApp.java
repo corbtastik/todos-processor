@@ -1,9 +1,5 @@
 package io.corbs;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +13,25 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
 import org.springframework.messaging.handler.annotation.Payload;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-class Todo {
-    private Integer id;
-    private String title = "";
-    private Boolean completed = false;
-    private Set<String> hashtags = Collections.emptySet();
-}
-
+/**
+ * Processors are Spring Boot apps that declare a "binding"
+ * and "channels" to use for communication.  Processors will
+ * take one or more "inputs" and produce one or more "outputs".
+ *
+ */
 @SpringBootApplication
 @EnableBinding(TodosProcessorApp.Channels.class)
 public class TodosProcessorApp {
 
     private static final Logger LOG = LoggerFactory.getLogger(TodosProcessorApp.class);
 
+    /**
+     * Processors have inputs and outputs
+     */
     interface Channels {
         @Output
         MessageChannel output();
@@ -53,6 +46,11 @@ public class TodosProcessorApp {
         this.channels = channels;
     }
 
+    /**
+     * Listen on the "input" and publish events on "output" channels
+     * @param todo
+     * @return
+     */
     @StreamListener("input")
     @Output("output")
     public Todo transform(@Payload Todo todo) {
