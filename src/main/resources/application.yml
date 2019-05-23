@@ -5,5 +5,5 @@ spring:
                 input:
                     destination: todos
                 output:
-                    destination: todos-upper
+                    destination: todos-sink
 

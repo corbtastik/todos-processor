@@ -12,8 +12,8 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Todo {
-    private Integer id;
+class Todo {
+    private Long id;
     private String title = "";
     private Boolean completed = false;
     private Set<String> hashtags = Collections.emptySet();
